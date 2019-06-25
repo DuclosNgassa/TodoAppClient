@@ -34,12 +34,15 @@ class Task {
 //Controller -> functions relating to Task
 Future<List<Task>> fetchTasks(http.Client client, int todoId) async {
   final response = await client.get('$URL_TASKS_BY_TODOID$todoId');
+  //final response = await client.get('$URL_TASKS');
   print('Task received1' + response.body);
   if(response.statusCode == 200){
     Map<String, dynamic> mapResponse = json.decode(response.body);
     if(mapResponse["result"] == "Ok"){
       print('Task received');
+      //final tasks = mapResponse["data"].cast<Map<String, dynamic>>();
       final tasks = mapResponse["data"].cast<Map<String, dynamic>>();
+      //print("34434" + tasks);
       final listOfTasks = await tasks.map<Task>((json) {
         return Task.fromJson(json);
       }).toList();
